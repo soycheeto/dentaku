@@ -16,6 +16,8 @@ class Dentaku():
 	def __init__(self, root):
 		self.tf = tk.Frame(root)	# トップレベルのフレーム
 		self.tf.grid(column = 0, row = 0, padx = 15, pady = 15)
+		self.first_operand = None
+		self.current_operation = None
 
 		# ボタンを配置
 		ButtonDef = (
@@ -50,26 +52,61 @@ class Dentaku():
 		self.NumBox.grid(column = 0, columnspan = 4, row = 0)
 
 	# ボタン毎の動作を定義（イベントドライバ群）
-	def numinput(self, e):			# 数字キー
-		pass
-
+	def numinput(self, e):	
+		button_label=e.widget['text']		# 数字キー
+		current_value=self.NumBox.get()
+		if current_value=="0":
+			self.NumBox.delete(0, tk.END)
+			self.NumBox.insert(0, button_label)
+		else:
+			self.NumBox.insert(tk.END, button_label)
+		
 	def mul(self, e):				# ×
-		pass
+		self.first_operand = int(self.NumBox.get())
+		self.current_operation = "mul"
+		self.NumBox.delete(0,tk.END)
 
 	def div(self, e):				# ／
-		pass
+		self.first_operand = int(self.NumBox.get())
+		self.current_operation = "div"
+		self.NumBox.delete(0, tk.END)
 
 	def sub(self, e):				# －
-		pass
+		self.first_operand = int(self.NumBox.get())
+		self.current_operation = "sub"
+		self.NumBox.delete(0, tk.END)
 
 	def add(self, e):				# ＋
-		pass
+		self.first_operand = int(self.NumBox.get())
+		self.current_operation = "add"
+		self.NumBox.delete(0, tk.END)
 
 	def equal(self, e):				# ＝
-		pass
+		second_operand = int(self.NumBox.get())
+		if self.current_operation=="mul":
+			result = self.first_operand * second_operand
+		elif self.current_operation=="add":
+			result = self.first_operand + second_operand
+		elif self.current_operation=="sub":
+			result = self.first_operand - second_operand
+		elif self.current_operation=="div":
+			if second_operand==0:
+				self.NumBox.delete(0, tk.END)
+				self.NumBox.insert(0, "Undefined")
+				return
+			else:
+				result = self.first_operand//second_operand
+		else:
+			return
+		self.NumBox.delete(0,tk.END)
+		self.NumBox.insert(0, int(result))
+		self.current_operation = None
 
 	def clear(self, e):				# Ｃ
-		pass
+		self.NumBox.delete(0, tk.END)
+		self.NumBox.insert(0,"0")
+		self.first_operand = None
+		self.current_operation = None
 
 if __name__ == '__main__':
 	main()
