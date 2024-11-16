@@ -1,6 +1,4 @@
 # 電卓 Level0
-
-import sys
 import tkinter as tk
 
 # メイン関数
