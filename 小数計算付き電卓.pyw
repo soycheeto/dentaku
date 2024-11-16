@@ -66,8 +66,7 @@ class Dentaku():
 				else:
 					self.NumBox.insert(tk.END, "." + button_label)
 			else:
-			    self.NumBox.insert(tk.END, button_label)
-		
+				self.NumBox.insert(tk.END, button_label)
 	def mul(self, e):				# ×
 		self.first_operand =float(self.NumBox.get())
 		self.current_operation = "mul"
